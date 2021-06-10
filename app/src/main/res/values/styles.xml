@@ -1,0 +1,80 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <!-- Light.NoActionBar -->
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundColor">#FFFFFF</item>
+        <item name="backgroundColor_2">#FFFFFF</item>
+        <item name="textColor">#000000</item>
+        <item name="textColor_2">#DBA5F5</item>
+        <item name="textColor_3">#FFFFFF</item>
+        <item name="buttonColor">#FF6581</item>
+        <item name="buttonColor_2">#6979F8</item>
+    </style>
+
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundColor">#000000</item>
+        <item name="backgroundColor_2">#FFFFFF</item>
+        <item name="textColor">#000000</item>
+        <item name="textColor_3">#000000</item>
+        <item name="buttonColor">#FFFFFF</item>
+        <item name="buttonColor_2">#FFFFFF</item>
+    </style>
+
+    <style name="GreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundColor">#023D2C</item>
+        <item name="backgroundColor_2">#FFFFFF</item>
+        <item name="textColor">#000000</item>
+        <item name="textColor_3">#000000</item>
+        <item name="buttonColor">#FFFFFF</item>
+        <item name="buttonColor_2">#FFFFFF</item>
+
+    </style>
+
+    <style name="VioletTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundColor">#CB5DDD</item>
+        <item name="backgroundColor_2">#FFFFFF</item>
+        <item name="textColor">#000000</item>
+        <item name="textColor_3">#000000</item>
+        <item name="buttonColor">#FFFFFF</item>
+        <item name="buttonColor_2">#FFFFFF</item>
+    </style>
+
+    <style name="BlueTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="backgroundColor">#60B1F1</item>
+        <item name="backgroundColor_2">#FFFFFF</item>
+        <item name="textColor">#000000</item>
+        <item name="textColor_3">#000000</item>
+        <item name="buttonColor">#FFFFFF</item>
+        <item name="buttonColor_2">#FFFFFF</item>
+    </style>
+
+    <style name="AppTheme.Launcher">
+
+    </style>
+
+    <style name="SeekBar">
+        <item name="android:background">@color/SeekBar</item>
+    </style>
+</resources>
