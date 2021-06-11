@@ -2,6 +2,7 @@ package com.example.taskappkb.model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.RoomDatabase;
 
 import java.io.Serializable;
 @Entity

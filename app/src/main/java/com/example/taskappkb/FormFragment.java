@@ -1,5 +1,6 @@
 package com.example.taskappkb;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 
 import com.example.taskappkb.databinding.FragmentFormBinding;
 import com.example.taskappkb.databinding.FragmentHomeBinding;
+import com.example.taskappkb.local.AppDatabase;
 import com.example.taskappkb.model.TaskModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -40,13 +42,7 @@ public class FormFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        binding.btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                save();
-                saveDatabase();
-            }
-        });
+
         if (getArguments() != null) {
             taskModel = (TaskModel) getArguments().getSerializable("task");
             if (taskModel != null) {
@@ -62,6 +58,12 @@ public class FormFragment extends Fragment {
             binding.etDescription.setText(taskModel.getDescription());
             requestKey = "formRed";
         }
+        binding.btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                save();
+            }
+        });
 
 
     }
@@ -69,7 +71,6 @@ public class FormFragment extends Fragment {
     private void save() {
         String title = binding.etTitle.getText().toString();
         String description = binding.etDescription.getText().toString();
-
         TaskModel taskModel = new TaskModel(title, description, System.currentTimeMillis());
         Bundle bundle = new Bundle();
         bundle.putSerializable("keyModel", taskModel);
@@ -82,10 +83,4 @@ public class FormFragment extends Fragment {
         navController.navigateUp();
     }
 
-    private void saveDatabase() {
-        if (taskModel != null) {
-            taskModel = new TaskModel();
-            App.getInstance().getDatabase().taskDao().insert(taskModel);
-        }
-    }
 }

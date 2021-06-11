@@ -46,13 +46,23 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         return list.size();
     }
     public void addInfo(TaskModel taskModel){
-        list.add(0,taskModel);
+        list.add(taskModel);
         notifyDataSetChanged();
     }
-    public void setList(List<TaskModel> taskModel) {
+    public void setList(List<TaskModel> listM) {
         list.clear();
-        list.addAll(taskModel);
+        this.list.addAll(listM);
         notifyDataSetChanged();
+    }
+
+    public void setPosition(int position){
+        list.get(position);
+        notifyDataSetChanged();
+    }
+    public void editModel(TaskModel taskModel, int position) {
+        list.get(position).setTitle(taskModel.getTitle());
+        list.add(taskModel);
+        notifyItemChanged(position);
     }
 
     public class HomeViewHolder extends RecyclerView.ViewHolder {
@@ -70,7 +80,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onItemClickListener.onItemClick(getAdapterPosition());
+                    onItemClickListener.onItemClick(getAdapterPosition(),taskModel);
                 }
             });
 
