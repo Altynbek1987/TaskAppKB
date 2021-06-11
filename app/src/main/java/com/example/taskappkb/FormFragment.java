@@ -68,15 +68,20 @@ public class FormFragment extends Fragment {
             }
         });
     }
-
     private void save() {
         String title = binding.etTitle.getText().toString();
         String description = binding.etDescription.getText().toString();
-        TaskModel taskModel = new TaskModel(title, description, System.currentTimeMillis());
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("keyModel", taskModel);
-        getParentFragmentManager().setFragmentResult("task", bundle);
-        App.getInstance(requireContext()).taskDao().insert(taskModel);
+        if (taskModel == null ) {
+            taskModel = new TaskModel(title, description, System.currentTimeMillis());
+            App.getInstance(requireContext()).taskDao().insert(taskModel);
+        }else {
+            taskModel.setTitle(title);
+            taskModel.setDescription(description);
+            App.getInstance(requireContext()).taskDao().update(taskModel);
+        }
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable("keyModel", taskModel);
+//        getParentFragmentManager().setFragmentResult("task", bundle);
         close();
     }
 

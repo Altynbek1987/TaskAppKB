@@ -55,16 +55,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         notifyDataSetChanged();
     }
 
-    public void setPosition(int position){
-        list.get(position);
-        notifyDataSetChanged();
-    }
-    public void editModel(TaskModel taskModel, int position) {
-        list.get(position).setTitle(taskModel.getTitle());
-        list.add(taskModel);
-        notifyItemChanged(position);
-    }
-
     public class HomeViewHolder extends RecyclerView.ViewHolder {
         private TextView txtTitle, txtDescription;
         public HomeViewHolder(@NonNull @NotNull View itemView) {
