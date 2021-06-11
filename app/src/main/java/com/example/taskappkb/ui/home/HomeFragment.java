@@ -98,15 +98,21 @@ public class HomeFragment extends Fragment {
                             homeAdapter.addInfo(taskModel);
                             homeAdapter.notifyDataSetChanged();
                         }
-                         App.getInstance(requireContext()).taskDao().insert(taskModel);
                     }
                 });
     }
 
     public void databasee() {
-        if (App.getInstance(requireContext()).taskDao().getAllLive() != null){
-            homeAdapter.setList(App.getInstance(requireContext()).taskDao().getAllLive());
-        }
+        App.getInstance(requireContext()).taskDao().getAllLive().
+                observe(getViewLifecycleOwner(), new Observer<List<TaskModel>>() {
+                    @Override
+                    public void onChanged(List<TaskModel> tasks) {
+                        homeAdapter.setList(tasks);
+                    }
+                });
+//        if (App.getInstance(requireContext()).taskDao().getAllLive() != null){
+//            homeAdapter.setList(App.getInstance(requireContext()).taskDao().getAllLive());
+//        }
 
     }
 

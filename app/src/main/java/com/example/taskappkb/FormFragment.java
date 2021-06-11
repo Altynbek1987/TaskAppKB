@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -23,6 +24,8 @@ import com.example.taskappkb.local.AppDatabase;
 import com.example.taskappkb.model.TaskModel;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class FormFragment extends Fragment {
 
@@ -64,8 +67,6 @@ public class FormFragment extends Fragment {
                 save();
             }
         });
-
-
     }
 
     private void save() {
@@ -75,6 +76,7 @@ public class FormFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putSerializable("keyModel", taskModel);
         getParentFragmentManager().setFragmentResult("task", bundle);
+        App.getInstance(requireContext()).taskDao().insert(taskModel);
         close();
     }
 
