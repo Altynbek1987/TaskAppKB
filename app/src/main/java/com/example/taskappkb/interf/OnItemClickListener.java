@@ -4,4 +4,5 @@ import com.example.taskappkb.model.TaskModel;
 
 public interface OnItemClickListener {
     void onItemClick(int position, TaskModel taskModel);
+    void onLongItemClick(int position, TaskModel taskModel);
 }

@@ -1,5 +1,7 @@
 package com.example.taskappkb.ui.home.adapter;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.taskappkb.App;
 import com.example.taskappkb.R;
 import com.example.taskappkb.interf.OnItemClickListener;
 import com.example.taskappkb.model.TaskModel;
@@ -71,6 +74,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
                 @Override
                 public void onClick(View v) {
                     onItemClickListener.onItemClick(getAdapterPosition(),taskModel);
+                }
+            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    onItemClickListener.onLongItemClick(getAdapterPosition(),taskModel);
+                    return false;
                 }
             });
 

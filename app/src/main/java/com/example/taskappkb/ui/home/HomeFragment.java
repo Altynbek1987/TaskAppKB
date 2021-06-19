@@ -1,17 +1,13 @@
 package com.example.taskappkb.ui.home;
 
-import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -20,19 +16,16 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.taskappkb.App;
 import com.example.taskappkb.R;
 import com.example.taskappkb.databinding.FragmentHomeBinding;
 import com.example.taskappkb.interf.OnItemClickListener;
-import com.example.taskappkb.local.TaskDao;
 import com.example.taskappkb.model.TaskModel;
 import com.example.taskappkb.ui.home.adapter.HomeAdapter;
 
-import org.jetbrains.annotations.NotNull;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +34,15 @@ public class HomeFragment extends Fragment {
 
     NavController navController;
     private HomeViewModel homeViewModel;
-    private RecyclerView recyclerView;
-    private HomeAdapter homeAdapter = new HomeAdapter();
+    private HomeAdapter homeAdapter;
     private FragmentHomeBinding binding;
     private List<TaskModel> list = new ArrayList<>();
-    private OnItemClickListener onItemClickListener;
-    //private TaskDao getDaoBD = App.getInstance(requireContext()).taskDao();
+
+    @Override
+    public void onCreate(@Nullable  Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        homeAdapter = new HomeAdapter();
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -61,12 +57,24 @@ public class HomeFragment extends Fragment {
         setResultListener();
         return root;
     }
-
-    @Override
-    public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void setAdapter() {
+        binding.recyclerView.setAdapter(homeAdapter);
+        binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+    }
+    public void databasee() {
+        App.getInstance(requireContext()).taskDao().getAllLive().
+                observe(getViewLifecycleOwner(), new Observer<List<TaskModel>>() {
+                    @Override
+                    public void onChanged(List<TaskModel> tasks) {
+                        homeAdapter.setList(tasks);
+                    }
+                });
+//        if (App.getInstance(requireContext()).taskDao().getAllLive() != null){
+//            homeAdapter.setList(App.getInstance(requireContext()).taskDao().getAllLive());
+//        }
 
     }
+
 
     public void pushData() {
         homeAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -78,15 +86,22 @@ public class HomeFragment extends Fragment {
                 navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
                 navController.navigate(R.id.action_nav_home_to_formFragment, bundle);
             }
+            @Override
+            public void onLongItemClick(final int position , TaskModel taskModel) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setMessage("Вы хотите удалить?" + taskModel.getTitle() + taskModel.getDescription())
+                            .setNegativeButton("Нет", null)
+                            .setPositiveButton("ДА", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    App.getInstance(requireContext()).taskDao().delete(taskModel);
+                                }
+                            });
+                    builder.show();
+            }
+
         });
     }
-
-
-    public void setAdapter() {
-        binding.recyclerView.setAdapter(homeAdapter);
-        binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-    }
-
     private void setResultListener() {
         getParentFragmentManager().setFragmentResultListener("task",
                 getViewLifecycleOwner(),
@@ -102,19 +117,7 @@ public class HomeFragment extends Fragment {
                 });
     }
 
-    public void databasee() {
-        App.getInstance(requireContext()).taskDao().getAllLive().
-                observe(getViewLifecycleOwner(), new Observer<List<TaskModel>>() {
-                    @Override
-                    public void onChanged(List<TaskModel> tasks) {
-                        homeAdapter.setList(tasks);
-                    }
-                });
-//        if (App.getInstance(requireContext()).taskDao().getAllLive() != null){
-//            homeAdapter.setList(App.getInstance(requireContext()).taskDao().getAllLive());
-//        }
 
-    }
 
 
 }
