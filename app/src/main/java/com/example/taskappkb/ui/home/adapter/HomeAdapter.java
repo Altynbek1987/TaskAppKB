@@ -57,6 +57,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         this.list.addAll(listM);
         notifyDataSetChanged();
     }
+    public void setListd(List<TaskModel> listM) {
+        list.clear();
+        this.list.addAll(listM);
+        notifyDataSetChanged();
+    }
 
     public class HomeViewHolder extends RecyclerView.ViewHolder {
         private TextView txtTitle, txtDescription;

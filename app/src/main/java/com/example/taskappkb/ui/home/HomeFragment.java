@@ -17,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.taskappkb.App;
 import com.example.taskappkb.R;
@@ -26,17 +28,19 @@ import com.example.taskappkb.model.TaskModel;
 import com.example.taskappkb.ui.home.adapter.HomeAdapter;
 
 
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
-
     NavController navController;
     private HomeViewModel homeViewModel;
     private HomeAdapter homeAdapter;
     private FragmentHomeBinding binding;
     private List<TaskModel> list = new ArrayList<>();
+
+
 
     @Override
     public void onCreate(@Nullable  Bundle savedInstanceState) {
@@ -58,14 +62,30 @@ public class HomeFragment extends Fragment {
         return root;
     }
     public void setAdapter() {
-        binding.recyclerView.setAdapter(homeAdapter);
-        binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        binding.recyclerVieww.setAdapter(homeAdapter);
+        //binding.recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        binding.recyclerVieww.setLayoutManager(new LinearLayoutManager(getContext()));
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull  RecyclerView recyclerView, @NonNull  RecyclerView.ViewHolder viewHolder, @NonNull  RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull  RecyclerView.ViewHolder viewHolder, int direction) {
+                App.getInstance(requireContext()).taskDao().delete(list.get(viewHolder.getAdapterPosition()));
+               // list.remove(viewHolder.getAdapterPosition());
+
+            }
+        }).attachToRecyclerView(binding.recyclerVieww);
+
     }
     public void databasee() {
         App.getInstance(requireContext()).taskDao().getAllLive().
                 observe(getViewLifecycleOwner(), new Observer<List<TaskModel>>() {
                     @Override
                     public void onChanged(List<TaskModel> tasks) {
+                        list = tasks;
                         homeAdapter.setList(tasks);
                     }
                 });
@@ -74,7 +94,6 @@ public class HomeFragment extends Fragment {
 //        }
 
     }
-
 
     public void pushData() {
         homeAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -86,6 +105,7 @@ public class HomeFragment extends Fragment {
                 navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
                 navController.navigate(R.id.action_nav_home_to_formFragment, bundle);
             }
+
             @Override
             public void onLongItemClick(final int position , TaskModel taskModel) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -98,6 +118,7 @@ public class HomeFragment extends Fragment {
                                 }
                             });
                     builder.show();
+
             }
 
         });
@@ -116,8 +137,4 @@ public class HomeFragment extends Fragment {
                     }
                 });
     }
-
-
-
-
 }
