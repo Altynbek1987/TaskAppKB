@@ -3,6 +3,8 @@ package com.example.taskappkb.ui.home;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 
@@ -40,8 +42,6 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private List<TaskModel> list = new ArrayList<>();
 
-
-
     @Override
     public void onCreate(@Nullable  Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +59,7 @@ public class HomeFragment extends Fragment {
         databasee();
         pushData();
         setResultListener();
+        searchTitle();
         return root;
     }
     public void setAdapter() {
@@ -136,5 +137,35 @@ public class HomeFragment extends Fragment {
                         }
                     }
                 });
+    }
+    private void searchTitle(){
+        binding.etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+
+            }
+
+            private void filter(String text) {
+                List<TaskModel> searchList = new ArrayList<>();
+                for (TaskModel item:list){
+                    if (item.getTitle().toLowerCase().contains(text.toLowerCase())) {
+                        searchList.add(item);
+                    }
+
+                }
+                homeAdapter.filterList(searchList);
+            }
+        });
     }
 }
