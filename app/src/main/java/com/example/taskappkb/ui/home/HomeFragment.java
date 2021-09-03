@@ -162,7 +162,6 @@ public class HomeFragment extends Fragment {
                     if (item.getTitle().toLowerCase().contains(text.toLowerCase())) {
                         searchList.add(item);
                     }
-
                 }
                 homeAdapter.filterList(searchList);
             }

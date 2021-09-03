@@ -25,7 +25,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
 
     private List<TaskModel> list = new ArrayList<>();
     OnItemClickListener onItemClickListener;
-    //private ArrayList<TaskModel> mExampleList = new ArrayList<>();
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
@@ -60,11 +59,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         notifyDataSetChanged();
     }
     public void setList(List<TaskModel> listM) {
-        list.clear();
-        this.list.addAll(listM);
-        notifyDataSetChanged();
-    }
-    public void setListd(List<TaskModel> listM) {
         list.clear();
         this.list.addAll(listM);
         notifyDataSetChanged();

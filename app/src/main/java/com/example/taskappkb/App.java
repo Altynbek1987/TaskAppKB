@@ -16,7 +16,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         context = this;
-
     }
 
     public static AppDatabase getInstance(Context context) {
